@@ -99,19 +99,25 @@
 			agree: { checked: v => v }
 		},
 		methods: {
-			submitHandler() {
+			async submitHandler() {
 				if (this.$v.$invalid) {
 					this.$v.$touch();
 					return;
 				}
 
 				const formData = {
-					name: this.name,
+					email: this.email,
 					password: this.password,
-					email: this.email
+					name: this.name
 				}
-				console.log(formData);
-				this.$router.push('/');
+
+				try {
+					await this.$store.dispatch('register', formData);
+					this.$router.push('/');
+				} catch (e) {
+
+				}
+				
 			}
 		}
 	}
